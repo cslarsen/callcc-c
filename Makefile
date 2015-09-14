@@ -1,4 +1,4 @@
-CFLAGS := -g -O0 -W -Wall -rdynamic
+CFLAGS := -g -O0 -W -Wall -rdynamic -march=native -mtune=native
 TARGETS := callcc
 
 all: $(TARGETS)
