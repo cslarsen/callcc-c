@@ -1,10 +1,13 @@
-CFLAGS := -g -O0 -W -Wall -rdynamic -march=native -mtune=native
+CFLAGS := -g -Os -W -Wall
 TARGETS := callcc
 
 all: $(TARGETS)
 
 run: all
 	./callcc
+
+dis: all
+	objdump -d callcc | $$PAGER
 
 clean:
 	rm -f $(TARGETS)
