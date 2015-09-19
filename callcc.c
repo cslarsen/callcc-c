@@ -4,7 +4,15 @@
  *
  * Work in progress ... trying to figure this out myself, instead of cheating
  * (too much). The general strategy is to just copy the entire call stack and
- * then reinstate it. (I *know* this works, because others have done it).
+ * then reinstate it.
+ *
+ * I *know* this works, because others have done it. See, for example:
+ *
+ *    http://lambda-the-ultimate.org/node/4411
+ *
+ * Also, libconcurrency does something to this effect, and the same does some
+ * Schemes
+ *
  */
 
 #include <assert.h>
