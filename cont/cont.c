@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <setjmp.h>
 
 #include "aux.h"
 
@@ -14,6 +16,7 @@ static size_t length = 0;
 static void *rip = NULL;
 
 static void *saved_rbp, *saved_rsp, *saved_rdi;
+static jmp_buf env;
 
 void foo(int value)
 {
@@ -34,6 +37,7 @@ void foo(int value)
     printf("copying call stack:\n");
     printf("  memcpy(%p, %p, %zu)\n", continuation, current, length);
     memcpy(continuation, current, length);
+    value = setjmp(env);
 
     // the last thing we do is to get the instruction pointer
     //rip = getrip();
@@ -54,7 +58,7 @@ next:
   printf("returning...\n");
 }
 
-void reinstate()
+void reinstate(int value)
 {
   printf("reinstating call stack:\n");
   printf("  memcpy(%p, %p, %zu)\n", root - length, continuation, length);
@@ -62,9 +66,12 @@ void reinstate()
   // actually, there is more to reinstating; we need to restore rbp, rsp, all
   // the argument registers, and so on
   printf("  jumping to %p\n", rip);
-  jmp(saved_rbp, saved_rsp, saved_rdi, rip);
+  longjmp(env, value);
+//  jmp(saved_rbp, saved_rsp, saved_rdi, rip);
   printf("*** THIS SHOULD NEVER EXECUTE! ***\n");
 }
+
+static int n=100;
 
 int main()
 {
@@ -74,8 +81,9 @@ int main()
   printf("root (in main)   %p\n", root);
 
   // Call function once ...
-  foo(100);
+  foo(n);
   // ... then reinstate the stack, looping
-  reinstate();
+  reinstate(--n);
   printf("done\n");
+  return 0;
 }

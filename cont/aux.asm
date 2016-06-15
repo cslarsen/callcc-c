@@ -1,6 +1,9 @@
 ; Needed for OSX, you may have to tune these for your platform
 bits 64
-align 16
+
+%ifidn __OUTPUT_FORMAT__,macho64
+  align 16
+%endif
 
 global _getrbp
 global _getrdi
