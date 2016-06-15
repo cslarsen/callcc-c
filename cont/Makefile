@@ -2,7 +2,13 @@ TARGETS := aux.o cont
 
 CFLAGS := -W -Wall -g -O0
 NASM := nasm
-NASMFLAGS := -fmacho64
+
+OS := $(shell uname)
+ifeq ($(OS),Linux)
+	NASMFLAGS := -felf64
+else
+	NASMFLAGS := -fmacho64
+endif
 
 run: cont
 	./cont
