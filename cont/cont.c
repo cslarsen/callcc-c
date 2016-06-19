@@ -43,7 +43,8 @@ void foo(int value)
     //rip = getrip();
     rip = &&next;
     // TODO: get address of label
-    printf("instruction pointer rip %p\n", rip);
+//    printf("instruction pointer rip %p\n", rip);
+//    TODO: Above line (printf) crashes on OSX, but not Linux.
   }
 
 next:
