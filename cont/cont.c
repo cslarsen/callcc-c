@@ -88,3 +88,28 @@ int main()
   printf("done\n");
   return 0;
 }
+
+struct saved {
+  void* rbp;
+  void* rsp;
+  void* rax;
+  void* rbx;
+  void* r12;
+  void* r13;
+  void* r14;
+  void* r15;
+  void* rsp_8; // not really needed
+  void* fpucw;
+  void* mccsr;
+};
+
+/*
+int main()
+{
+  struct saved s;
+  save(&s);
+  printf(" rbp=%p\n", s.rbp);
+  printf(" rsp=%p\n", s.rsp);
+  printf("rsp8=%p\n", s.rsp_8);
+}
+*/
